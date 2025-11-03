@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Recommendations</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-white font-sans">
+  <div class="max-w-4xl mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">Recommended Movies</h1>
+    <div class="flex gap-2 mb-4">
+      <input id="idInput" type="number" class="p-2 rounded bg-white/10 flex-1" placeholder="Enter Movie ID" />
+      <button id="btn" class="bg-amber-500 text-black px-4 py-2 rounded">Get Recommendations</button>
+    </div>
+    <div id="list" class="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4"></div>
+  </div>
+
+  <script>
+    const API = "http://127.0.0.1:8000";
+    const btn = document.getElementById("btn");
+    const list = document.getElementById("list");
+    const input = document.getElementById("idInput");
+
+    btn.onclick = async () => {
+      const id = input.value.trim();
+      if (!id) return alert("Enter a movie ID!");
+      const res = await fetch(`${API}/api/similar?movie_id=${id}&k=10`);
+      const data = await res.json();
+      list.innerHTML = data.map(m =>
+        `<div class='bg-white/10 p-3 rounded-lg hover:bg-white/20'>
+          <div class='font-semibold'>${m.title}</div>
+          <div class='text-sm text-white/70'>${m.genres}</div>
+        </div>`).join("");
+    };
+  </script>
+</body>
+</html>

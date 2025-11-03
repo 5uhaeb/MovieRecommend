@@ -1,0 +1,21 @@
+# Virtual environment
+backend/.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
+
+# Data files
+backend/data/
+*.zip
+*.csv
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
